@@ -5,9 +5,9 @@ import React, { ReactNode } from "react";
 const Providers = ({ children }: { children: ReactNode }) => {
   const queryClient = new QueryClient()
 
-  return    <QueryClientProvider client={queryClient}>
+  return   ( <QueryClientProvider client={queryClient}>
   {children}
-  </QueryClientProvider>
+  </QueryClientProvider>);
 };
 
 export default Providers;

@@ -9,14 +9,28 @@ export const loginInstructor = async (data: any) => {
     url: `${BASE_URL}/ilogin`,
     data,
   });
-  console.log(res);
+  // console.log(res);
   return res;
 };
 
-export const logoutInstructor = async (data: any) => {
+export const registerInstructor = async (data: any) => {
   return await request({
     method: "POST",
-    url: `${BASE_URL}/ilogin`,
+    url: `${BASE_URL}/iregister`,
     data,
   });
 };
+
+
+
+export const checkEmail = async (data: any) => {
+  return await request({
+    method: "POST",
+    url: `${BASE_URL}/check-email`,
+    data,
+  });
+};
+
+
+
+

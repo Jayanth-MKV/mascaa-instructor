@@ -1,4 +1,4 @@
-import { InstructorRegister } from '@/components/component/instructor-register'
+import { InstructorRegister } from '@/components/component/auth/instructor-register'
 import React from 'react'
 
 const Register = () => {

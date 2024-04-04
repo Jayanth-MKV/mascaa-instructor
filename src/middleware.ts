@@ -10,14 +10,18 @@ export function middleware(req: NextRequest) {
   const tokenFromOauth = req.cookies.get("token");
   const tokenData =  req.cookies.get("i_user");
 
-  // console.log({
-  //   tokenData,token,tokenFromOauth
-  // })
+  console.log({
+    tokenData,token,tokenFromOauth
+  })
 
-
+  console.log("inside middleware")
+  
+  
   if (req.nextUrl.pathname.startsWith("/oauth")) {
+    console.log("inside oauth")
     const oAuthToken = req.nextUrl.searchParams.get("token") || "";
     const user = req.nextUrl.searchParams.get("i_user") || "";
+    console.log(oAuthToken)
     console.log(user)
 
     if (oAuthToken.length > 0) {
@@ -42,6 +46,8 @@ export function middleware(req: NextRequest) {
 
 
 if (req.url.includes("signout")) {
+  console.log("inside signout")
+
   const response = NextResponse.redirect(new URL('/auth/signin', req.url))
 
   response.cookies.delete("token");
@@ -73,6 +79,8 @@ if (req.url.includes("signout")) {
   // }
 
 if((!token && !tokenData) && ((token && !tokenData) || (!token && tokenData))){
+  console.log("inside no token")
+
   return NextResponse.redirect(new URL("/auth/signout", req.url));
 }
 
@@ -90,7 +98,7 @@ if((!token && !tokenData) && ((token && !tokenData) || (!token && tokenData))){
     !token &&
     !tokenFromOauth &&
     !tokenData &&
-    !req.nextUrl.pathname.startsWith("/auth/signin")
+    !req.nextUrl.pathname.startsWith("/auth")
   ) {
     console.log("cant enter homepage ");
     return NextResponse.redirect(new URL("/auth/signin", req.url));
@@ -103,7 +111,7 @@ if((!token && !tokenData) && ((token && !tokenData) || (!token && tokenData))){
     return NextResponse.redirect(new URL("/home", req.url));
   }
 
-
+  console.log("return middleware: ",req.nextUrl.href)
   return NextResponse.next();
 }
 

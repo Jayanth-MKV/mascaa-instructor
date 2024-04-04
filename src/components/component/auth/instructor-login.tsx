@@ -9,53 +9,64 @@ import { BACKEND_URL, FRONTEND_URL } from "@/utils/constants"
 import { useApiSend } from "@/hooks/network/rq"
 import { loginInstructor } from "@/hooks/server/auth/url"
 import { useToast } from "@/components/ui/use-toast"
-import { useRef } from "react"
-import { LoadingSpinner } from "./loader"
+import { useEffect, useRef } from "react"
+import { LoadingSpinner } from "../home/loader"
+import { Package2Icon } from "../../icons/page"
+import { useSearchParams } from "next/navigation"
 
 export function InstructorLogin() {
-  const { toast } = useToast()
+  const { toast } = useToast();
+  const searchParams = useSearchParams()
+
+  const email = searchParams.get('email');
 
   const emailref = useRef(null);
   const passwordref = useRef(null);
+
+  useEffect(() => {
+    emailref.current.value = email;
+  }, [email, emailref])
+
 
   const handleOauth = async (event: any) => {
     event.preventDefault();
     window.location.href = `${BACKEND_URL}/auth/callback/google`;
   };
 
-  const { mutate,isError, isPending } = useApiSend(
+  const { mutate, isError, isPending } = useApiSend(
     loginInstructor,
-    (data:any) => {
+    (data: any) => {
       console.log(data)
-        toast({
-            title: "success",
-            description: "Login Successful"
-        })
-        window.location.href = `${FRONTEND_URL}/oauth?token=${data?.access_token}`
+      toast({
+        title: "success",
+        description: "Login Successful"
+      })
+      window.location.href = `${FRONTEND_URL}/oauth?token=${data?.access_token}&i_user=${JSON.stringify(data?.user)}`;
     },
-    (e:any) => {
-        toast({variant: "destructive",
-            title: "Cannot Login",
-            description: e?.message
-        })
+    (e: any) => {
+      toast({
+        variant: "destructive",
+        title: "Cannot Login",
+        description: e?.message
+      })
     },
 
-);
+  );
 
-if(isError){
-  console.log("Error")
-}
+  const onSubmit = async () => {
+    mutate({
+      email: (emailref)?.current?.value,
+      password: (passwordref)?.current?.value,
+    });
+  }
 
-const onSubmit = async ()=>{
-mutate({
-    email:  (emailref)?.current?.value,
-    password: (passwordref)?.current?.value,
-});
-}
-
-if(isPending){
-return <LoadingSpinner/>
-}
+  if (isPending) {
+    return (<div className="h-full w-full flex-col flex items-center gap-5 justify-center">
+      <Package2Icon className="h-6 w-6" />
+      <span className="text-xl font-bold tracking-tight text-gray-900 sm:text-xl">MASCCA</span>
+      <LoadingSpinner />
+    </div>)
+  }
 
 
   return (

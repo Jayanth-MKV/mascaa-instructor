@@ -1,14 +1,14 @@
-import { HomePage } from '@/components/component/home-page';
+import { HomePage } from '@/components/component/home/home-page';
 import React from 'react'
 
 const layout = ({
-    children,
-  }: Readonly<{
-    children: React.ReactNode;
-  }>) => {
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) => {
   return (
     <HomePage>
-    {children}
+      {children}
     </HomePage>
   )
 }

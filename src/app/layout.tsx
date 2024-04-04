@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "@/providers/sessionprovider";
 import { Toaster } from "@/components/ui/toaster";
-import { HomePage } from "@/components/component/home-page";
+import { Toaster as T } from "@/components/ui/sonner"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,12 +20,13 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.className}>
-      <Providers>
-        {children}
-        <Toaster />
-      </Providers>
-        </body>
+      <body className={`${inter.className} overflow-hidden`}>
+        <Providers>
+          {children}
+          <Toaster />
+          <T />
+        </Providers>
+      </body>
     </html>
   );
 }
