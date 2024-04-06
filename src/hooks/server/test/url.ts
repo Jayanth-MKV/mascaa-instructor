@@ -1,5 +1,5 @@
 import { request } from "@/hooks/network/network";
-import { EditTestType, Test } from "@/types/types";
+import { Test } from "@/types/types";
 
 const BASE_URL="test";
 

@@ -10,19 +10,19 @@ export function middleware(req: NextRequest) {
   const tokenFromOauth = req.cookies.get("token");
   const tokenData =  req.cookies.get("i_user");
 
-  console.log({
-    tokenData,token,tokenFromOauth
-  })
+  // console.log({
+  //   tokenData,token,tokenFromOauth
+  // })
 
-  console.log("inside middleware")
+  // console.log("inside middleware")
   
   
   if (req.nextUrl.pathname.startsWith("/oauth")) {
     console.log("inside oauth")
     const oAuthToken = req.nextUrl.searchParams.get("token") || "";
     const user = req.nextUrl.searchParams.get("i_user") || "";
-    console.log(oAuthToken)
-    console.log(user)
+    // console.log(oAuthToken)
+    // console.log(user)
 
     if (oAuthToken.length > 0) {
       //   const response = NextResponse.next();
@@ -111,7 +111,7 @@ if((!token && !tokenData) && ((token && !tokenData) || (!token && tokenData))){
     return NextResponse.redirect(new URL("/home", req.url));
   }
 
-  console.log("return middleware: ",req.nextUrl.href)
+  // console.log("return middleware: ",req.nextUrl.href)
   return NextResponse.next();
 }
 

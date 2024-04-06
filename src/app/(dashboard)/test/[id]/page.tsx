@@ -38,49 +38,13 @@ const page = async ({ params, searchParams }: {
 
     const data = await getTest(params.id);
     const d = Object.keys(data);
-    // console.log(data);
+    console.log(data);
 
     const data1 = await getQues(params.id);
     const d1 = Object.keys(data1);
     // console.log(data1);
 
     const currentTab = searchParams['tab'];
-    // console.log(currentTab)
-
-
-    // const { data,
-    //   isLoading,
-    //   error,
-    //   isError,
-    //   isLoadingError,
-    //   refetch } = useApiGet(
-    //     ["test"],
-    //     async ()=>getTest(),
-    //     {
-    //       enabled: true,
-    //       refetchOnWindowFocus: true,
-    //       retry: 1
-    //     }
-    //   );
-
-    // if (isError || isLoadingError)
-    //   toast({
-    //     variant: "destructive",
-    //     title: "Error",
-    //     description: "Cannot get tests"
-    //   })
-
-    // console.log(data);
-
-
-
-    // if (isLoading) {
-    //   return (<div className="h-full w-full flex-col flex items-center gap-5 justify-center">
-    //     <Package2Icon className="h-6 w-6" />
-    //     <span className="text-xl font-bold tracking-tight text-gray-900 sm:text-xl">MASCCA</span>
-    //     <LoadingSpinner />
-    //   </div>)
-    // }
 
     const Tabts = () => {
 
@@ -145,11 +109,11 @@ const page = async ({ params, searchParams }: {
                     <div className='font-bold text-2xl text-center p-3 sticky top-0 bg-white'>
                         Test Publish & Share</div>
                     {data!=undefined && data?.published && params?.id &&
-                        <PublishTest id={params.id} />
+                        <PublishTest id={params.id} test={data?.title} />
                     }
                     {
                         data!=undefined && !data?.published &&
-                        <UnPublishTest id={params.id} />
+                        <UnPublishTest id={params.id}  />
                     }
                 </TabsContent>
 

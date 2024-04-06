@@ -123,7 +123,9 @@ const page = () => {
                       }}>
                         <FileTextIcon className="mr-2 h-4 w-4" /> View
                       </Button>
-                      <Button className="w-full">
+                      <Button className="w-full" onClick={() => {
+                        router.push("/test/" + test._id+"/results");
+                      }}>
                         <DashboardIcon className="mr-2 h-4 w-4" /> Results
                       </Button>
                     </div>

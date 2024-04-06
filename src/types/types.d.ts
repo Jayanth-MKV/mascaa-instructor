@@ -21,3 +21,11 @@ export interface Register{
     startTime: string; // You may want to use a Date type here
     endTime: string; // You may want to use a Date type here
  }
+
+ export interface inviteMail{
+  to:string;
+  subject:string;
+  name:string;
+  link:string;
+
+ }

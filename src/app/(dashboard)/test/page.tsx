@@ -1,6 +1,6 @@
 "use client"
 import { Button } from '@/components/ui/button'
-import { FileIcon, FileTextIcon, PlusCircledIcon } from '@radix-ui/react-icons'
+import { FileIcon, FileTextIcon, PlusCircledIcon, Share1Icon } from '@radix-ui/react-icons'
 import React from 'react'
 import { useToast } from "@/components/ui/use-toast"
 import { getTests } from '@/hooks/server/test/url'
@@ -51,40 +51,13 @@ const page = () => {
       description: "Cannot get tests"
     })
 
-  console.log(data);
+  // console.log(data);
 
 
 
   if (isLoading) {
     return <Loading />
   }
-
-  // const test = {
-  //   createdAt:
-  //     "2024-04-01T19:58:41.391Z",
-  //   createdBy
-  //     :
-  //     "660913ff443c7da86b61911a",
-  //   keywords
-  //     :
-  //     ['computer-science', 'mathematics'],
-  //   published
-  //     :
-  //     false,
-  //   testSecret
-  //     :
-  //     "AED7E9",
-  //   title
-  //     :
-  //     "Test on cs",
-  //   updatedAt
-  //     :
-  //     "2024-04-01T19:58:41.391Z",
-  //   _id
-  //     :
-  //     "660b11f1a3e84b63a44a1ea7",
-  // }
-
 
   return (
     <div>
@@ -140,7 +113,7 @@ const page = () => {
                       <Button className="w-full" onClick={() => {
                         router.push("/test/" + test._id + "?tab=publish")
                       }}>
-                        <SendHorizonalIcon className="mr-2 h-4 w-4" /> Publish
+                        <Share1Icon className="mr-2 h-4 w-4" /> Share
                       </Button>
                     </div>
                   </CardFooter>
