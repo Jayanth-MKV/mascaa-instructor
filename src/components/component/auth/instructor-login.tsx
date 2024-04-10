@@ -99,7 +99,7 @@ export function InstructorLogin() {
             Login with Google
           </Button>
           <div className="mt-4 text-center text-sm">
-            Don't have an account?
+            Don&apos;t have an account?
             <Link className="underline" href="/auth/register">
               Sign up
             </Link>

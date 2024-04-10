@@ -19,10 +19,6 @@ const MenuBar = () => {
     const { editor } = useCurrentEditor();
     const [link, setlink] = useState("https://")
 
-    if (!editor) {
-        return null
-    }
-
     const setLink = useCallback(() => {
         const previousUrl = editor.getAttributes('link').href
         const url = link;
@@ -45,6 +41,11 @@ const MenuBar = () => {
             .run()
         setlink("")
     }, [editor, link])
+    
+    if (!editor) {
+        return null
+    }
+
 
     return (
         <div className="border-solid rounded-md border flex flex-wrap gap-3 font-mono text-[10px]">
@@ -287,7 +288,7 @@ const extensions = [
 
 
 
-export default ({ description, onChange }: any) => {
+const EditorPage = ({ description, onChange }: any) => {
     return (
         <EditorProvider onUpdate={({ editor }) => {
             onChange(editor.getHTML());
@@ -296,3 +297,5 @@ export default ({ description, onChange }: any) => {
         }} slotBefore={<MenuBar />} extensions={extensions} content={description}></EditorProvider>
     )
 }
+
+export default EditorPage;

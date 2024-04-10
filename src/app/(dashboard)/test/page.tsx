@@ -23,7 +23,7 @@ import Loading from './loading'
 import NoData from '@/components/component/home/NoData'
 
 
-const page = () => {
+const Page = () => {
   const { toast } = useToast();
   const router = useRouter()
   const pathname = usePathname()
@@ -78,7 +78,7 @@ const page = () => {
         <div className="items-center mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-300 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
           {data != undefined &&
             data?.sort((a: any, b: any) => new Date(b?.updatedAt) - new Date(a?.updatedAt))?.map((test: any) => (
-              <article className="flex max-w-xl flex-col items-center justify-between">
+              <article key={test?.title} className="flex max-w-xl flex-col items-center justify-between">
                 <Card className='h-[400px] w-[280px] flex flex-col justify-between'>
                   {test?.published && <Badge className='bg-green-400'>Published</Badge>}
                   {!test?.published && <Badge variant={'destructive'}>Not Published</Badge>}
@@ -93,7 +93,7 @@ const page = () => {
                   <ScrollArea className="w-full p-2 whitespace-nowrap rounded-md border">
                     <CardContent className='flex gap-3 overflow-hidden max-h-[100px] h-fit'>
                       {test?.keywords && test?.keywords.map((k: string) => (
-                        <Badge>{k}</Badge>
+                        <Badge key={k}>{k}</Badge>
                       ))}
                     </CardContent>
                     <ScrollBar orientation="horizontal" />
@@ -135,4 +135,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

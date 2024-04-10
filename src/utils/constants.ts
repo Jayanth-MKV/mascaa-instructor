@@ -108,5 +108,13 @@ export const TOPICS = [
     value: "database-management",
     label: "Database Management",
   },
+  {
+    value: "behavioural",
+    label: "Behavioural",
+  },
+  {
+    value: "interview",
+    label: "Interview",
+  },
 ];
 

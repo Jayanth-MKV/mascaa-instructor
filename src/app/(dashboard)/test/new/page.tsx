@@ -68,8 +68,8 @@ const Newtest = () => {
     const payload = {
       title: data?.title,
       keywords: selected.map((i) => (i?.value)),
-    }
-    mutate(payload);
+    } as any
+    mutate({...payload});
     console.log("submitted data", payload);
   }
 
@@ -91,7 +91,7 @@ const Newtest = () => {
           <p className="mt-2 text-lg leading-8 text-gray-600">Create Tests and Evaluate Confidence </p>
         </div>
         <Card className="w-[350px]">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit as any)}>
             <CardHeader>
               {/* <CardTitle>Create Test</CardTitle>
               <CardDescription>Create your new Test in one-click.</CardDescription> */}

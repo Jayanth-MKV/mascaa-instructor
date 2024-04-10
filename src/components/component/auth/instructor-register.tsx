@@ -83,7 +83,7 @@ export function InstructorRegister() {
     const payload = {
       email: data?.email,
       password: data.password,
-      name: data.password,
+      name: data.name,
       department: department
     }
     mutate(payload);
