@@ -62,7 +62,7 @@ const page = async ({ params, searchParams }: {
 
     return (
         <div>
-            <Tabs defaultValue={(currentTab && typeof currentTab == "string") ? currentTab : "publish"} className="w-full">
+            <Tabs defaultValue={(currentTab && typeof currentTab == "string") ? currentTab : "overview"} className="w-full">
                 <TabsList className='hidden md:flex mb-5 sticky top-2 left-2 w-fit h-auto gap-2 '>
                     <Tabts />
                 </TabsList>
@@ -102,7 +102,7 @@ const page = async ({ params, searchParams }: {
                 <TabsContent value="edit-q" className="p-3">
                     <div className='font-bold text-2xl text-center p-3 py-5 border-b-2 border-gray-300 sticky z-[49] top-0 bg-white'>Test Questions</div>
                     {data1!=undefined &&
-                        <EditQues data={data1} id={params.id} />
+                        <EditQues title={data.title} about={data.about} keywords={data.keywords} data={data1} id={params.id} />
                     }
                 </TabsContent>
                 <TabsContent value="publish" className="p-3">
@@ -112,8 +112,8 @@ const page = async ({ params, searchParams }: {
                         <PublishTest id={params.id} test={data?.title} />
                     }
                     {
-                        data!=undefined && !data?.published &&
-                        <UnPublishTest id={params.id}  />
+                        data!=undefined && data1!=undefined && !data?.published &&
+                        <UnPublishTest id={params.id} d={data1} />
                     }
                 </TabsContent>
 

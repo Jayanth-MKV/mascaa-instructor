@@ -1,5 +1,5 @@
 "use client"
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 import {
     Card,
@@ -35,12 +35,29 @@ import {
 
 
 
-const UnPublishTest = ({ id }: { id: string }) => {
+const UnPublishTest = ({ id ,d}: { id: string ,d:any}) => {
 
     console.log(id)
 
     const { toast } = useToast()
     const router = useRouter();
+
+
+    const [CanPublish, setCanPublish] = useState(false);
+
+    useEffect(() => {
+      const canp = d.map((ques:any)=>{
+        return (ques["subquestion"][0]["correctAnswer"]!="" || ques["subquestion"][0]["powerReference"]!=""  ) && (ques["subquestion"][1]["correctAnswer"]!="" || ques["subquestion"][1]["powerReference"]!=""  )
+      })
+
+    //   console.log(canp)
+
+      if(!canp.includes(false)){
+        setCanPublish(true);
+      }
+    }, [])
+    
+
 
     const { mutate, isPending } = useApiSend(
         publishTest,
@@ -83,7 +100,7 @@ const UnPublishTest = ({ id }: { id: string }) => {
                         <Badge className='ml-3' variant="destructive">unpublished</Badge>
                     </CardTitle>
                     <Separator />
-                    <CardDescription>
+                    <CardDescription className='py-5'>
                         <Label className='mt-5 text-md font-semibold'>Make sure the test is completely created before publishing </Label>
                         <a className='ml-5 text-sm text-blue-400  underline' href={`/test/${id}?tab=overview`} >
                             Check Overview
@@ -91,11 +108,12 @@ const UnPublishTest = ({ id }: { id: string }) => {
                     </CardDescription>
 
                     <AlertDialog>
+                            <Button className="w-full mt-5" disabled={!CanPublish} asChild>
                         <AlertDialogTrigger>
-                            <Button className="w-full mt-5">
                                 <SendHorizonalIcon className="mr-2 h-4 w-4" /> Publish
-                            </Button>
                         </AlertDialogTrigger>
+                            </Button>
+                        {!CanPublish && <strong>can only publish if all test questions are created</strong>}
                         <AlertDialogContent>
                             <AlertDialogHeader>
                                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>

@@ -5,7 +5,7 @@ import ListItem from '@tiptap/extension-list-item'
 import TextStyle from '@tiptap/extension-text-style'
 import { EditorProvider, useCurrentEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Link from '@tiptap/extension-link'
 import {
     Popover,
@@ -15,9 +15,14 @@ import {
 import { Input } from "../../ui/input"
 import { Button } from "../../ui/button"
 
-const MenuBar = () => {
+const MenuBar = ({description}:any) => {
     const { editor } = useCurrentEditor();
     const [link, setlink] = useState("https://")
+
+    useEffect(() => {
+        editor?.commands.setContent(description);
+      }, [description])
+
 
     const setLink = useCallback(() => {
         const previousUrl = editor.getAttributes('link').href
@@ -46,6 +51,8 @@ const MenuBar = () => {
         return null
     }
 
+
+    
 
     return (
         <div className="border-solid rounded-md border flex flex-wrap gap-3 font-mono text-[10px]">
@@ -256,7 +263,7 @@ const MenuBar = () => {
             </button>
             <button type="button"
                 onClick={() => {
-                    console.log(editor.isActive('textStyle', { color: 'red' }))
+                    //console.log(editor.isActive('textStyle', { color: 'red' }))
                     !editor.isActive('textStyle', { color: 'red' }) ? editor.chain().focus().setColor('red').run() : editor.chain().focus().setColor('').run()
                 }}
                 className={editor.isActive('textStyle', { color: 'red' }) ? 'is-active' : 'border-solid border border-black p-1'}
@@ -289,12 +296,13 @@ const extensions = [
 
 
 const EditorPage = ({ description, onChange }: any) => {
+    //console.log(description)
     return (
         <EditorProvider onUpdate={({ editor }) => {
             onChange(editor.getHTML());
-            console.log(editor.getHTML());
+            // console.log(editor.getHTML());
             // return false;
-        }} slotBefore={<MenuBar />} extensions={extensions} content={description}></EditorProvider>
+        }} slotBefore={<MenuBar description={description} />} extensions={extensions}  content={description}></EditorProvider>
     )
 }
 

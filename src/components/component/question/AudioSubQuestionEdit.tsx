@@ -39,7 +39,7 @@ import { SelectSeparator } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 
 const EditAudioSubQuesSchema = z.object({
-    title: z.string().min(5, { message: "title must be at least 5 characters long" }).max(50, { message: "title cant be more than 50 characters" }), // Assuming maximum length of 100 characters
+    title: z.string().min(10, { message: "topic must be at least 10 characters long" }).max(200, { message: "title cant be more than 200 characters" }), // Assuming maximum length of 100 characters
     content: z.string().max(1500, { message: "content cant be more than 1500 characters" }),
     powerReference: z.string().min(10, {
         message: "reference text must be at least 10 characters.",
@@ -168,7 +168,7 @@ const AudioSubQuesEdit = ({ testId, id, title, content, powerReference }: { test
                                             <FormLabel className='text-lg font-bold'>Reference Answer -For Audio Answer Analysis</FormLabel>
                                             <FormControl>
                                                 <Textarea
-                                                    placeholder="Tell us a little bit about yourself"
+                                                    placeholder="write the answer you are expecting for reference"
                                                     className="resize min-h-[200px]"
                                                     {...field}
                                                 />

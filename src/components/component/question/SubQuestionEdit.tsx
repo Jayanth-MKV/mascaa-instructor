@@ -38,7 +38,7 @@ import { LoadingSpinner } from '../home/loader';
 import { SelectSeparator } from '@/components/ui/select';
 
 const EditSubQuesSchema = z.object({
-    title: z.string().min(5, { message: "title must be at least 5 characters long" }).max(50, { message: "title cant be more than 50 characters" }), // Assuming maximum length of 100 characters
+    title: z.string().min(10, { message: "topic must be at least 10 characters long" }).max(200, { message: "title cant be more than 200 characters" }), // Assuming maximum length of 100 characters
     content: z.string().max(1500, { message: "content cant be more than 1500 characters" }),
     correctAnswer: z.string().min(1,{message:"answer cant be empty"}).max(10, { message: "answer can't be more than 10 characters" }),
 })

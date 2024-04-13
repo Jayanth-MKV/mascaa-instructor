@@ -8,6 +8,12 @@ export function Package2Icon(props: any) {
   )
 }
 
+export function MascaaIcon(props: any) {
+  return (
+    <Image {...props} src={icon} alt="icon" />
+  )
+}
+
 
 export function BellIcon(props: any) {
   return (

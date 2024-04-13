@@ -95,9 +95,9 @@ if((!token && !tokenData) && ((token && !tokenData) || (!token && tokenData))){
   // }
 
   if (
-    !token &&
-    !tokenFromOauth &&
-    !tokenData &&
+    (!token &&
+    !tokenFromOauth ||
+    !tokenData )&&
     !req.nextUrl.pathname.startsWith("/auth")
   ) {
     console.log("cant enter homepage ");
@@ -106,8 +106,8 @@ if((!token && !tokenData) && ((token && !tokenData) || (!token && tokenData))){
 
 
 
-  if ((token || tokenFromOauth) && Object.keys(tokenData).length!=0 && req.nextUrl.pathname.startsWith("/auth")) {
-    console.log("cant enter homepage ");
+  if ((token || tokenFromOauth) && tokenData  && Object.keys(tokenData).length!=0 && req.nextUrl.pathname.startsWith("/auth")) {
+    console.log("cant enter ");
     return NextResponse.redirect(new URL("/home", req.url));
   }
 

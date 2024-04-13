@@ -11,7 +11,7 @@ import { FileTextIcon } from '@radix-ui/react-icons';
 const ViewTest = ({ test }) => {
 
   const router = useRouter();
-  const { title, instructions, guidelines, tandc, testSecret, keywords, durationMinutes, startTime, endTime } = test;
+  const { title,about, instructions, guidelines, tandc, testSecret, keywords, durationMinutes, startTime, endTime } = test;
 
   //   function htmlDecode(input){
   //    var e = window.document.createElement('div');
@@ -44,6 +44,15 @@ const ViewTest = ({ test }) => {
         <CardContent className='md:p-5'>
 
           <div className='overflow-auto'>
+            <div>
+              <h2 className='font-bold mb-3'>
+                <div>
+                  About:
+                </div>
+              </h2>
+              <div dangerouslySetInnerHTML={{ __html: about }} className='renderhtml '></div>
+            </div>
+            <Separator className='my-3' />
             <div>
               <h2 className='font-bold mb-3'>
                 <div>
@@ -100,6 +109,7 @@ const ViewTest = ({ test }) => {
                 </div>
               </h2> {endDate}</div>
           </div>
+          <div className='text-red-400 text-center'>Edit these in the Test Instructions tab</div>
         </CardContent>
       </Card>
       <Card className='mx-auto'>

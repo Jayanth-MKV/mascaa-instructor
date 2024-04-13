@@ -13,7 +13,10 @@ import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 export function HomePage({ children }: { children: ReactNode }) {
   const cookie = cookies().get('token')
   const cuser = cookies().get('i_user') || "{value:''}";
-  const user = JSON.parse(cuser["value"]);
+  let user = {}
+  if(cuser && cuser["value"]){
+    user = JSON.parse(cuser["value"]);
+  }
   // console.log(cookie)
   console.log(user)
 

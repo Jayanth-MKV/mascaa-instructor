@@ -2,7 +2,7 @@
 import React from 'react'
 import NoData from '@/components/component/home/NoData';
 import { Button } from '@/components/ui/button';
-import { PlusCircledIcon } from '@radix-ui/react-icons';
+import { CheckCircledIcon, Cross1Icon, PlusCircledIcon } from '@radix-ui/react-icons';
 import { useApiSend } from '@/hooks/network/rq';
 import { generateQues } from '@/hooks/server/test/url';
 import { useToast } from '@/components/ui/use-toast';
@@ -43,13 +43,25 @@ import QuesEdit from '../question/QuesEdit';
 
 
 
-const EditQues = ({ data, id }: any) => {
+const EditQues = ({ title, about, data, id, keywords }: any) => {
 
     const { toast } = useToast();
     const router = useRouter();
 
     console.log(data);
 
+    const getAllQuesTopics = ()=>{
+        const a = data.map((item:any)=>{
+            if(item["question"].topic!="Question Title/Topic"){
+                return item["question"].topic;
+            }
+            else{
+                return ""
+            }
+        });
+    
+        return a;
+    }
 
 
     const { mutate, isPending } = useApiSend(
@@ -90,6 +102,7 @@ const EditQues = ({ data, id }: any) => {
     }
 
 
+    
 
 
     if (data && data?.length == 0) {
@@ -114,7 +127,6 @@ const EditQues = ({ data, id }: any) => {
 
 
 
-
     return (
         <div className='md:w-[70%] mx-auto pt-10'>{
             data &&
@@ -127,12 +139,16 @@ const EditQues = ({ data, id }: any) => {
                                 value={`question-${index + 1}`}
                                 className="mb-4 p-3 border-2 border-slate-100"
                             >
-                                <AccordionTrigger className='aria-expanded:border-slate-300 aria-expanded:border-b-4 aria-expanded:rounded-none aria-expanded:pb-5 text-md font-bold p-2 rounded-md '>{`Question ${index + 1}: ${question["question"].topic}`}</AccordionTrigger>
+                                <AccordionTrigger className='aria-expanded:border-slate-300 aria-expanded:border-b-4 aria-expanded:rounded-none aria-expanded:pb-5 text-md font-bold p-2 rounded-md '>
+                                    {question["subquestion"] && (question["subquestion"][0]["powerReference"] || question["subquestion"][0]["correctAnswer"]) && (question["subquestion"][1]["powerReference"] || question["subquestion"][1]["correctAnswer"]) ? <CheckCircledIcon className='text-green-500 font-bold h-5 w-5' /> : <Cross1Icon />}
+                                    {`Question ${index + 1}: ${question["question"].topic}`}
+
+                                </AccordionTrigger>
                                 <Dialog>
                                     <AccordionContent className=" ">
                                         <div className='md:p-3 flex-2'>
                                             <div className='relative my-10 '>
-                                                {question["question"]?.topic && <QuesEdit testId={question["question"]?.testId} id={question["question"]._id} topic={question["question"]?.topic} content={question["question"]?.content} />}
+                                                {question["question"]?.topic && title && <QuesEdit getAllQuesTopics={getAllQuesTopics} keywords={keywords} title={title} about={about} testId={question["question"]?.testId} id={question["question"]._id} topic={question["question"]?.topic} content={question["question"]?.content} />}
                                                 <CardHeader>
                                                     <CardTitle className='text-xl'>
                                                         {question["question"]?.topic}

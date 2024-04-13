@@ -18,10 +18,12 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Badge } from '@/components/ui/badge';
+import { Textarea } from '@/components/ui/textarea';
 
 
 const FormSchema = z.object({
   title: z.string().min(3, { message: 'title must be at least 3 characters' }),
+  about: z.string().min(30, { message: 'about must be at least 30 characters' }),
 })
 
 const Newtest = () => {
@@ -67,6 +69,7 @@ const Newtest = () => {
   const onSubmit = async (data: Test) => {
     const payload = {
       title: data?.title,
+      about: data?.about,
       keywords: selected.map((i) => (i?.value)),
     } as any
     mutate({...payload});
@@ -102,6 +105,12 @@ const Newtest = () => {
                   <Label htmlFor="title">Title</Label>
                   <Input {...register("title")} placeholder="Title of your Test" />
                   {errors?.title && <Badge variant="destructive">{errors?.title?.message}</Badge>}
+
+                </div>
+                <div className="flex flex-col space-y-1.5">
+                  <Label htmlFor="about">About</Label>
+                  <Textarea {...register("about")} placeholder="About your Test" />
+                  {errors?.about && <Badge variant="destructive">{errors?.about?.message}</Badge>}
 
                 </div>
                 <div className="flex flex-col space-y-1.5">
