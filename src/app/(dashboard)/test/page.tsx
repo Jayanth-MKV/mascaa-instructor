@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/card"
 import { convertDateToIst } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
-import { SendHorizonalIcon } from 'lucide-react'
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import Loading from './loading'
 import NoData from '@/components/component/home/NoData'
