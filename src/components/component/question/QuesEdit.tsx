@@ -33,9 +33,11 @@ import { useApiSend } from '@/hooks/network/rq';
 import { useToast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { updateQues } from '@/hooks/server/test/url';
-import { MascaaIcon, Package2Icon } from '@/components/icons/page';
+import { AIRobot, MascaaIcon, Package2Icon } from '@/components/icons/page';
 import { LoadingSpinner } from '../home/loader';
 import { SelectSeparator } from '@/components/ui/select';
+import { MarginIcon } from '@radix-ui/react-icons';
+import { Badge } from '@/components/ui/badge';
 
 const EditQuesSchema = z.object({
     topic: z.string().min(5, { message: "topic must be at least 5 characters long" }).max(50, { message: "title cant be more than 50 characters" }), // Assuming maximum length of 100 characters
@@ -107,11 +109,20 @@ const QuesEdit = ({getAllQuesTopics, testId, id, topic, content, title, about,ke
             });
 
             const data = await response.text();
-            console.log("------------")
-            console.log(data)
-            console.log("------------")
-            const aiData =  JSON.parse(data);
-            return aiData[0]; // Assuming the response contains the generated question content
+            try {
+                const aiData = JSON.parse(data);
+                return aiData[0];
+              } catch (parseError:any) {
+                // If the parsing fails, try to extract the valid JSON content
+                const jsonStartIndex = data.indexOf('{');
+                if (jsonStartIndex !== -1) {
+                  const jsonContent = data.slice(jsonStartIndex);
+                  const aiData = JSON.parse(jsonContent);
+                  return aiData[0];
+                } else {
+                  throw new Error(`Error parsing AI response: ${parseError?.message}`);
+                }
+              }
         } catch (error) {
             console.error('Error fetching question content from AI:', error);
             throw error;
@@ -160,6 +171,9 @@ const QuesEdit = ({getAllQuesTopics, testId, id, topic, content, title, about,ke
         <div>
             <Sheet>
                 <SheetTrigger>
+                    <Badge  className='bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 absolute top-3 right-20'>AI</Badge>
+                    <AIRobot  className='absolute top-0 right-8' />
+                    {/* <MarginIcon className='bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 absolute top-3 right-10' height={20} width={20} /> */}
                     <EditIcon height={20} width={20} className='absolute top-3 right-3' />
                 </SheetTrigger>
                 <SheetContent side={"right"} className='w-full overflow-y-auto'>

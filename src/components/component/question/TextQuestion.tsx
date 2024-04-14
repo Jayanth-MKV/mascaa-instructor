@@ -10,7 +10,7 @@ import TextSubQuesEdit from './SubQuestionEdit'
 import { Badge } from '@/components/ui/badge'
 import { FileTextIcon } from '@radix-ui/react-icons'
 
-const TextQuestion = ({ question, id }: any) => {
+const TextQuestion = ({ question, id,title,about,questionTopic,questionContent }: any) => {
   return (
     <div className='md:p-3 flex flex-col justify-between h-auto'>
       <Card className='py-3' >
@@ -22,7 +22,7 @@ const TextQuestion = ({ question, id }: any) => {
         <div className='px-3'>This question can be an MCQ ( recommended ) or T/F or one word answers </div>
       </Card>
       <div className='relative flex-1 mt-5'>
-        {question?.title && <TextSubQuesEdit testId={id} id={question?._id} title={question?.title} content={question?.content} correctAnswer={question?.correctAnswer} />}
+        {question?.title && <TextSubQuesEdit testTitle={title} testAbout={about} questionTopic={questionTopic} questionContent={questionContent}  testId={id} id={question?._id} title={question?.title} content={question?.content} correctAnswer={question?.correctAnswer} />}
         <CardHeader>
           <CardTitle className='text-xl'>
             {question?.title}

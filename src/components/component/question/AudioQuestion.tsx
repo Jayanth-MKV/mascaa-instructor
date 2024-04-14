@@ -8,7 +8,7 @@ import {
 import AudioSubQuesEdit from './AudioSubQuestionEdit'
 import { SpeakerLoudIcon } from '@radix-ui/react-icons'
 
-const AudioQuestion = ({ question, id }: any) => {
+const AudioQuestion = ({ question, id, title, about, questionTopic, questionContent }: any) => {
   return (
     <div className='md:p-3 '>
       <Card className='py-3' >
@@ -20,7 +20,7 @@ const AudioQuestion = ({ question, id }: any) => {
         <div className='px-3'>This question can be an a general question ( recommended ). The answer is speech, so ask accordingly</div>
       </Card>
       <Card className='relative my-10'>
-        {question?.title && <AudioSubQuesEdit testId={id} id={question?._id} title={question?.title} content={question?.content} powerReference={question?.powerReference} />}
+        {question?.title && <AudioSubQuesEdit testTitle={title} testAbout={about} questionTopic={questionTopic} testId={id} id={question?._id} title={question?.title} content={question?.content} powerReference={question?.powerReference} />}
         <CardHeader>
           <CardTitle className='text-xl'>
             {question?.title}

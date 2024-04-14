@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useForm } from "react-hook-form"
 import { z } from 'zod';
@@ -33,10 +33,11 @@ import { useApiSend } from '@/hooks/network/rq';
 import { useToast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { updateSubQues } from '@/hooks/server/test/url';
-import { Package2Icon } from '@/components/icons/page';
+import { AIRobot, MascaaIcon, Package2Icon } from '@/components/icons/page';
 import { LoadingSpinner } from '../home/loader';
 import { SelectSeparator } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
 
 const EditAudioSubQuesSchema = z.object({
     title: z.string().min(10, { message: "topic must be at least 10 characters long" }).max(200, { message: "title cant be more than 200 characters" }), // Assuming maximum length of 100 characters
@@ -50,10 +51,13 @@ const EditAudioSubQuesSchema = z.object({
 
 
 // id - subques , testId for navigation
-const AudioSubQuesEdit = ({ testId, id, title, content, powerReference }: { testId: string, id: string, title: string, content: string, powerReference: string }) => {
+const AudioSubQuesEdit = ({ testId, id, title, content, powerReference,testTitle,testAbout,questionTopic,questionContent  }: {testTitle:string,testAbout:string,questionTopic:string,questionContent:string, testId: string, id: string, title: string, content: string, powerReference: string }) => {
 
     const { toast } = useToast()
     const router = useRouter();
+
+    const [isGeneratingWithAI, setIsGeneratingWithAI] = useState(false);
+
 
     const form = useForm<z.infer<typeof EditAudioSubQuesSchema>>({
         resolver: zodResolver(EditAudioSubQuesSchema),
@@ -86,16 +90,8 @@ const AudioSubQuesEdit = ({ testId, id, title, content, powerReference }: { test
         },
     );
 
-    if (isPending) {
-        return (<div className="h-full w-full flex-col flex items-center gap-5 justify-center">
-            <Package2Icon className="h-6 w-6" />
-            <span className="text-xl font-bold tracking-tight text-gray-900 sm:text-xl">MASCCA</span>
-            <LoadingSpinner />
-        </div>)
-    }
-
-
-
+    
+    
     const onSubmit = async (sdata: z.infer<typeof EditAudioSubQuesSchema>) => {
         const payload = {
             title: sdata?.title,
@@ -110,16 +106,111 @@ const AudioSubQuesEdit = ({ testId, id, title, content, powerReference }: { test
         }
     }
 
+    
+
+
+
+
+
+    async function fetchQuestionContentFromAI() {
+        console.log({ testTitle, testAbout,questionTopic,questionContent })
+        try {
+            const response = await fetch('/api/generate-audio-question', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ title:testTitle,about:testAbout,topic:questionTopic,content:questionContent }),
+            });
+
+            const data = await response.text();
+            console.log(data)
+            try {
+                const aiData = JSON.parse(data);
+                return aiData[0];
+              } catch (parseError:any) {
+                // If the parsing fails, try to extract the valid JSON content
+                const jsonStartIndex = data.indexOf('{');
+                if (jsonStartIndex !== -1) {
+                  const jsonContent = data.slice(jsonStartIndex);
+                  const aiData = JSON.parse(jsonContent);
+                  return aiData[0];
+                } else {
+                  throw new Error(`Error parsing AI response: ${parseError.message}`);
+                }
+              }
+        } catch (error) {
+            console.error('Error fetching question content from AI:', error);
+            throw error;
+        }
+    }
+
+    useEffect(() => {
+      console.log(isGeneratingWithAI)
+    }, [isGeneratingWithAI])
+    
+
+
+
+    const generateWithAI = async () => {
+        setIsGeneratingWithAI(true);
+        try {
+            // Fetch the new question content from the AI
+            const newQuestionContent = await fetchQuestionContentFromAI();
+            console.log(newQuestionContent)
+            // Update the form fields with the new content
+            form.setValue('title', newQuestionContent.title);
+            form.setValue('content', newQuestionContent.content);
+            form.setValue('powerReference', newQuestionContent.referenceAnswer);
+        } catch (error) {
+            console.error('Error generating question content:', error);
+            toast({
+                variant: "destructive",
+                title: "Failed to generate question content",
+                description: 'Please try again later.'
+            })
+        } finally {
+            setIsGeneratingWithAI(false);
+        }
+    }
+
+
+
+
+
+
+
+    
+    if (isPending) {
+        return (<div className="h-full w-full flex-col flex items-center gap-5 justify-center">
+            <Package2Icon className="h-6 w-6" />
+            <span className="text-xl font-bold tracking-tight text-gray-900 sm:text-xl">MASCCA</span>
+            <LoadingSpinner />
+        </div>)
+    }
 
     return (
         <div>
             <Sheet>
                 <SheetTrigger>
+                <Badge  className='bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 absolute top-3 right-20'>AI</Badge>
+                <AIRobot  className='absolute top-0 right-8' />
                     <EditIcon height={20} width={20} className='absolute top-3 right-3' />
-                </SheetTrigger>
+                 </SheetTrigger>
                 <SheetContent side={"right"} className='w-full overflow-y-auto'>
                     <SheetHeader>
                         <SheetTitle>Edit Sub Question Content</SheetTitle>
+                        <Button className='font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800' 
+                        onClick={generateWithAI} disabled={isGeneratingWithAI}>
+                            {isGeneratingWithAI ? (
+                                <LoadingSpinner />
+                            ) : (
+                                <>
+                                    <MascaaIcon className="mr-2 rounded-md h-5 w-5" />
+                                    Generate with AI
+                                </>
+                            )}
+                        </Button>
                         <SheetDescription>
                             Make sure the question content is related to both the sub question content. Something like the content which helps the user in answering the subquestions
                         </SheetDescription>

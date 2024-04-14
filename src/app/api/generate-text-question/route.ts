@@ -10,31 +10,32 @@ export const runtime = 'edge';
 const MODEL_NAME = "gemini-1.0-pro";
 
 // Build a prompt
-function buildPrompt(title: string, about: string, keywords: string[],exclude: string[]) {
+function buildPrompt(title: string, about: string, topic: string,content: string) {
   return {
     contents: [
       {
         role: 'user',
         parts: [
           {
-            text: `Generate question topic and content related to topic for a ${title} test. Use the given title, keywords, and about section to generate relevant content. Also given the excluded topics, give topics not including those in the excluded topics
+            text: `Generate a MCQ question title, content(with options) and correctAnswer(only one option) for a question with topic & content which is for a test with testtitle and testabout . Use the given questiontopic, questioncontent and testtitle and testabout section to generate relevant content.
 
-Title: '${title}'
-
-About: '${about}'
-
-Keywords: [${keywords.map((kw) => `'${kw}'`).join(', ')}]
-
-excluded topics: [${exclude.map((kw) => `'${kw}'`).join(', ')}]
-
-I need you to provide a response in strict JSON format. Do not include any additional text or formatting other than the JSON data. The JSON output should be a valid object with the following structure:
-
-[{
-  "topic": "",
-  "content": ""
-}]
-
-Please respond with the JSON data only, without any other text.`,
+            TestTitle: '${title}'
+            
+            TestAbout: '${about}'
+            
+            Questiontopic:"${topic}",
+            
+            questioncontent:"${content}"
+            
+            I need you to provide a response in strict JSON format. Do not include any additional text or formatting other than the JSON data. The JSON output should be a valid object with the following structure:
+            
+            [{
+            "title": "mcq question related to the above question topic",
+            "content": "containng text with options of the mcq question above",
+            "correctAnswer":"Just one correct option from above options in the content . e.g: A / B / C/ D"
+            }]
+            
+            Please respond with the JSON data only, without any other text.`,
           },
         ],
       },
@@ -50,14 +51,14 @@ const generation_config = {
 }
 
 export async function POST(req: Request) {
-    const { title, about, keywords,exclude } = await req.json();
-    console.log({ title, about, keywords ,exclude})
+    const { title, about, topic,content } = await req.json();
+    console.log({ title, about,topic,content})
   try {
     // Extract the prompt parameters from the request body
 
     // Build the prompt
-    const prompt = buildPrompt(title, about, keywords,exclude);
-    //console.log(prompt);
+    const prompt = buildPrompt(title, about,topic,content);
+    //onsole.log(prompt);
 
     // Request the Google API for the response based on the prompt
     const response = await genAI
@@ -66,6 +67,7 @@ export async function POST(req: Request) {
 
       const t = (await response.response).text()
       const data = await getDataFromJson(t);
+      console.log(data)
 
       return new NextResponse(data, { status: 200 });
       
@@ -81,7 +83,7 @@ export async function POST(req: Request) {
     // for (let i = 0; i < 2; i++) {
     //   try {
     //     // Build the prompt
-    //     const prompt = buildPrompt(title, about, keywords,exclude);
+    //     const prompt = buildPrompt(title, about, topic,content);
 
     //     // Request the Google API for the response based on the prompt
     //     const response = await genAI
