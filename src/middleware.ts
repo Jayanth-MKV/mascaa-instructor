@@ -10,6 +10,10 @@ export function middleware(req: NextRequest) {
   const tokenFromOauth = req.cookies.get("token");
   const tokenData =  req.cookies.get("i_user");
 
+  if (req.nextUrl.pathname.startsWith('/api/')) {
+    return NextResponse.next()
+  }
+
   // console.log({
   //   tokenData,token,tokenFromOauth
   // })
