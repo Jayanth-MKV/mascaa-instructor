@@ -57,9 +57,8 @@ const Page = () => {
     toast({
       variant: "destructive",
       title: "Error",
-      description: "Cannot get tests :" + error.message
+      description: "Cannot get tests :" + error?.message
     });
-    refetch();
   }
 
   // console.log(data);
