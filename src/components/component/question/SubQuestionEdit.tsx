@@ -159,7 +159,7 @@ const TextSubQuesEdit = ({ testId,id, title, content,correctAnswer,testTitle,tes
                     description: 'Please try again later.'
                 })
             } finally {
-                setIsGeneratingWithAI(false);
+                // setIsGeneratingWithAI(false);
             }
         }
     
@@ -234,7 +234,7 @@ const TextSubQuesEdit = ({ testId,id, title, content,correctAnswer,testTitle,tes
                                         <FormItem>
                                             <FormLabel className='text-lg font-bold'>Options</FormLabel>
                                             <FormControl>
-                                                <Tiptap description={field.value} onChange={field.onChange} />
+                                                <Tiptap description={field.value} onChange={field.onChange} can={isGeneratingWithAI} canChange={setIsGeneratingWithAI} />
                                             </FormControl>
                                             <FormDescription>we recommend options to be in the format A,B,C,D or 1,2,3,4, or any other single word</FormDescription>
                                             <FormMessage />

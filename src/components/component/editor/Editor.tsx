@@ -15,12 +15,15 @@ import {
 import { Input } from "../../ui/input"
 import { Button } from "../../ui/button"
 
-const MenuBar = ({description}:any) => {
+const MenuBar = ({description,can,canChange}:any) => {
     const { editor } = useCurrentEditor();
     const [link, setlink] = useState("https://")
 
     useEffect(() => {
-        editor?.commands.setContent(description);
+        if(can){
+                editor?.commands.setContent(description);
+                canChange(false)
+        }
       }, [description])
 
 
@@ -295,14 +298,14 @@ const extensions = [
 
 
 
-const EditorPage = ({ description, onChange }: any) => {
+const EditorPage = ({ description, onChange,can,canChange }: any) => {
     //console.log(description)
     return (
         <EditorProvider onUpdate={({ editor }) => {
             onChange(editor.getHTML());
             // console.log(editor.getHTML());
             // return false;
-        }} slotBefore={<MenuBar description={description} />} extensions={extensions}  content={description}></EditorProvider>
+        }} slotBefore={<MenuBar description={description} can={can} canChange={canChange} />} extensions={extensions}  content={description}></EditorProvider>
     )
 }
 

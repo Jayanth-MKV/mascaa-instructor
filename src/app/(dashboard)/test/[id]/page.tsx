@@ -11,7 +11,15 @@ import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import ViewTest from '@/components/component/test/TestView';
 import EditQues from '@/components/component/test/EditQues';
-
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+  } from "@/components/ui/breadcrumb"
+  
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -62,6 +70,21 @@ const page = async ({ params, searchParams }: {
 
     return (
         <div>
+                              <Breadcrumb className='mx-6 my-6 py-5'>
+  <BreadcrumbList>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/home">Home</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/test">tests</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbPage>view - edit - publish</BreadcrumbPage>
+    </BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>
             <Tabs defaultValue={(currentTab && typeof currentTab == "string") ? currentTab : "overview"} className="w-full">
                 <TabsList className='hidden md:flex mb-5 sticky top-2 left-2 w-fit h-auto gap-2 '>
                     <Tabts />

@@ -170,7 +170,7 @@ const AudioSubQuesEdit = ({ testId, id, title, content, powerReference,testTitle
                 description: 'Please try again later.'
             })
         } finally {
-            setIsGeneratingWithAI(false);
+            // setIsGeneratingWithAI(false);
         }
     }
 
@@ -243,7 +243,7 @@ const AudioSubQuesEdit = ({ testId, id, title, content, powerReference,testTitle
                                         <FormItem>
                                             <FormLabel className='text-lg font-bold'>Content</FormLabel>
                                             <FormControl>
-                                                <Tiptap description={field.value} onChange={field.onChange} />
+                                                <Tiptap description={field.value} onChange={field.onChange} can={isGeneratingWithAI} canChange={setIsGeneratingWithAI} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

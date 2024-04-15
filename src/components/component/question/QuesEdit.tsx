@@ -111,7 +111,7 @@ const QuesEdit = ({getAllQuesTopics, testId, id, topic, content, title, about,ke
             const data = await response.text();
             try {
                 const aiData = JSON.parse(data);
-                return aiData[0];
+                return aiData[0] || aiData;
               } catch (parseError:any) {
                 // If the parsing fails, try to extract the valid JSON content
                 const jsonStartIndex = data.indexOf('{');
@@ -153,7 +153,7 @@ const QuesEdit = ({getAllQuesTopics, testId, id, topic, content, title, about,ke
                 description: 'Please try again later.'
             })
         } finally {
-            setIsGeneratingWithAI(false);
+            // setIsGeneratingWithAI(false);
         }
     }
 
@@ -221,7 +221,7 @@ const QuesEdit = ({getAllQuesTopics, testId, id, topic, content, title, about,ke
                                         <FormItem>
                                             <FormLabel className='text-lg font-bold'>Content</FormLabel>
                                             <FormControl>
-                                                <Tiptap description={field.value} onChange={field.onChange}/>
+                                                <Tiptap description={field.value} onChange={field.onChange} can={isGeneratingWithAI} canChange={setIsGeneratingWithAI}/>
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
