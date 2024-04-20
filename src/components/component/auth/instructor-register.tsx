@@ -35,7 +35,6 @@ const FormSchema = z.object({
 
 
 
-
 export function InstructorRegister() {
 
   const [department, setdepartment] = useState("");

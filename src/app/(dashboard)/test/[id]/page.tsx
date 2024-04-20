@@ -123,7 +123,7 @@ const page = async ({ params, searchParams }: {
                     />}
                 </TabsContent>
                 <TabsContent value="edit-q" className="p-3">
-                    <div className='font-bold text-2xl text-center p-3 py-5 border-b-2 border-gray-300 sticky z-[49] top-0 bg-white'>Test Questions</div>
+                    <div className='font-bold text-2xl text-center p-3 py-5 border-b-2 border-gray-300 sticky z-[49] top-0 bg-white'>{data.title}</div>
                     {data1!=undefined &&
                         <EditQues title={data.title} about={data.about} keywords={data.keywords} data={data1} id={params.id} />
                     }
