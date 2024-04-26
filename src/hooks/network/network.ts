@@ -21,8 +21,13 @@ export const request = async (options: any) => {
     error => {
       if (error.response.status === 401) {
         redirect(`${FRONTEND_URL}/auth/signout`)
+        // return {
+        //   message: 'You do not have permission to access this resource.',
+        //   error: 'Unauthorized',
+        //   statusCode: 401
+        // };
       }
-      return Promise.reject(error);
+      return Promise.reject(error.response.data);
     },
   );
 
@@ -37,7 +42,7 @@ export const request = async (options: any) => {
   };
 
   const onError = async (error: any) => {
-    // console.log(error);
+    console.log(error);
     return Promise.reject(error?.response?.data);
   };
 

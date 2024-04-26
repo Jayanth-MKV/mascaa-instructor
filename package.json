@@ -11,6 +11,7 @@
   "dependencies": {
     "@google/generative-ai": "^0.6.0",
     "@hookform/resolvers": "^3.3.4",
+    "@nivo/pie": "^0.85.1",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-dialog": "^1.0.5",
@@ -26,6 +27,7 @@
     "@radix-ui/react-toast": "^1.1.5",
     "@radix-ui/react-tooltip": "^1.0.7",
     "@tanstack/react-query": "^5.28.9",
+    "@tanstack/react-table": "^8.16.0",
     "@tiptap/extension-color": "^2.2.4",
     "@tiptap/extension-floating-menu": "^2.2.4",
     "@tiptap/extension-heading": "^2.2.4",
@@ -50,6 +52,7 @@
     "react-day-picker": "^8.10.0",
     "react-dom": "^18",
     "react-hook-form": "^7.51.2",
+    "recharts": "^2.12.6",
     "sonner": "^1.4.41",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",

@@ -46,7 +46,7 @@ const page = async ({ params, searchParams }: {
 
     const data = await getTest(params.id);
     const d = Object.keys(data);
-    console.log(data);
+    // console.log(data);
 
     const data1 = await getQues(params.id);
     const d1 = Object.keys(data1);

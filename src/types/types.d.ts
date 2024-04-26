@@ -29,3 +29,15 @@ export interface Register{
   link:string;
 
  }
+
+ 
+ export interface evalType {
+ 
+  question_confidence: number,
+  correctAnswer: string | boolean,
+  audioEmotion: string,
+  videoEmotion: string,
+  audiotextRelevancy: string,
+  time: string
+
+}
