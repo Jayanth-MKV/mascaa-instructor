@@ -1,6 +1,6 @@
 export const BACKEND_URL="https://mascca-backend.onrender.com"
-export const FRONTEND_URL="https://mascaa-instructor.vercel.app"
-export const PUBLISH_URL="https://mascaa-user.vercel.app"
+export const FRONTEND_URL="https://mascaa-instructor.eddrix.com/"
+export const PUBLISH_URL="https://mascaa.eddrix.com/"
 
 // export const BACKEND_URL="http://localhost:8000"
 // export const FRONTEND_URL="http://localhost:3000"
