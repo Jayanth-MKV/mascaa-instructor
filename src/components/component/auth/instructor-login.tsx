@@ -13,6 +13,7 @@ import { useEffect, useRef } from "react"
 import { LoadingSpinner } from "../home/loader"
 import { Package2Icon } from "../../icons/page"
 import { useSearchParams } from "next/navigation"
+import Contact from "../home/Contact"
 
 export function InstructorLogin() {
   const { toast } = useToast();
@@ -75,7 +76,7 @@ export function InstructorLogin() {
         <div className="space-y-2 text-center">
           <div className="mx-auto h-8" />
           <div className="space-y-2">
-            <h1 className="text-2xl font-bold">Welcome back</h1>
+            <h1 className="text-2xl font-bold">Test Creator Login</h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">Enter your credentials to access your account</p>
           </div>
         </div>
@@ -87,9 +88,9 @@ export function InstructorLogin() {
           <div className="space-y-2">
             <div className="flex items-center space-x-2">
               <Label htmlFor="password">Password</Label>
-              <Link className="text-sm underline" href="#">
+              {/* <Link className="text-sm underline" href="#">
                 Forgot password
-              </Link>
+              </Link> */}
             </div>
             <Input ref={passwordref} id="password" name="password" placeholder="Enter your password" type="password" />
           </div>
@@ -99,10 +100,10 @@ export function InstructorLogin() {
             Login with Google
           </Button>
           <div className="mt-4 text-center text-sm">
+            <div className="underline">
+            <Contact name={"Sign up"} />
+            </div>
             Don&apos;t have an account?
-            <Link className="underline" href="/auth/register">
-              Sign up
-            </Link>
           </div>
         </div>
       </CardContent>

@@ -83,7 +83,6 @@ if (req.url.includes("signout")) {
   // }
 
 if((!token && !tokenData) && ((token && !tokenData) || (!token && tokenData))){
-  console.log("inside no token")
 
   return NextResponse.redirect(new URL("/auth/signout", req.url));
 }
@@ -98,20 +97,22 @@ if((!token && !tokenData) && ((token && !tokenData) || (!token && tokenData))){
   //   return NextResponse.redirect(new URL("/auth/signout", req.url));
   // }
 
+
   if (
     (!token &&
-    !tokenFromOauth ||
-    !tokenData )&&
+      !tokenFromOauth ||
+      !tokenData
+    )
+      &&
     !req.nextUrl.pathname.startsWith("/auth")
   ) {
-    console.log("cant enter homepage ");
+    // console.log("cant enter homepage ");
     return NextResponse.redirect(new URL("/auth/signin", req.url));
   }
 
 
 
   if ((token || tokenFromOauth) && tokenData  && Object.keys(tokenData).length!=0 && req.nextUrl.pathname.startsWith("/auth")) {
-    console.log("cant enter ");
     return NextResponse.redirect(new URL("/home", req.url));
   }
 
